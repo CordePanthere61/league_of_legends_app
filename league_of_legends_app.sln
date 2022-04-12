@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "league_of_legends_app.UI", "league_of_legends_app.UI\league_of_legends_app.UI.csproj", "{772E2DDD-D6DB-41B4-B002-F1461E6BBD25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "league_of_legends_app.CORE", "league_of_legends_app.CORE\league_of_legends_app.CORE.csproj", "{6BC7A38E-E84B-46D4-B976-678089EE59B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{772E2DDD-D6DB-41B4-B002-F1461E6BBD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{772E2DDD-D6DB-41B4-B002-F1461E6BBD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{772E2DDD-D6DB-41B4-B002-F1461E6BBD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{772E2DDD-D6DB-41B4-B002-F1461E6BBD25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BC7A38E-E84B-46D4-B976-678089EE59B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC7A38E-E84B-46D4-B976-678089EE59B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC7A38E-E84B-46D4-B976-678089EE59B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC7A38E-E84B-46D4-B976-678089EE59B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
