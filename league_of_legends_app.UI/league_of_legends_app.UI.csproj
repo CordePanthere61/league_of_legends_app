@@ -8,4 +8,12 @@
         <RootNamespace>league_of_legends_app</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\league_of_legends_app.CORE\league_of_legends_app.CORE.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SimpleMvvmToolkit.Express" Version="2.0.0" />
+    </ItemGroup>
+
 </Project>

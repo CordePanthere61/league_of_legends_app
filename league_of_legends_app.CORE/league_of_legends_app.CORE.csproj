@@ -7,10 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models" />
       <Folder Include="Repositories" />
       <Folder Include="Services" />
-      <Folder Include="ViewModels" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Npgsql" Version="6.0.3" />
+      <PackageReference Include="SimpleMvvmToolkit.Express" Version="2.0.0" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0-preview.2.22152.2" />
     </ItemGroup>
 
 </Project>
