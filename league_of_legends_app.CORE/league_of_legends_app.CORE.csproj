@@ -7,14 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Repositories" />
-      <Folder Include="Services" />
+      <PackageReference Include="Npgsql" Version="6.0.3" />
+      <PackageReference Include="SimpleMvvmToolkit.Express" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Npgsql" Version="6.0.3" />
-      <PackageReference Include="SimpleMvvmToolkit.Express" Version="2.0.0" />
-      <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0-preview.2.22152.2" />
+      <Reference Include="System.Configuration.ConfigurationManager">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.4\System.Configuration.ConfigurationManager.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

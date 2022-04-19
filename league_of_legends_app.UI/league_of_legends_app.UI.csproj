@@ -16,4 +16,10 @@
       <PackageReference Include="SimpleMvvmToolkit.Express" Version="2.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="App.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
