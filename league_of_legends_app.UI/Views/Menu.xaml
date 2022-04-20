@@ -1,0 +1,62 @@
+﻿<Window x:Class="league_of_legends_app.Views.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:league_of_legends_app"
+        mc:Ignorable="d"
+        Height="600" Width="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Label 
+            Grid.Row="0" 
+            Grid.Column="0"
+            Grid.ColumnSpan="3" 
+            Content="Welcome to League of Legends management program" 
+            HorizontalAlignment="Center"
+            Margin="100 100 100 400"
+            VerticalAlignment="Center"
+            FontFamily="Courier"
+            FontSize="28"
+            />
+        
+        <Button 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Width="175"
+            Height="80"
+            Margin="0 100 0 0"
+            Content="Manage champions"
+            Command="{Binding ManageChampionsCommand}"
+            />
+        <Button 
+            Grid.Row="0" 
+            Grid.Column="1" 
+            VerticalAlignment="Center"
+            Width="175"
+            Height="80"
+            Margin="0 100 0 0"
+            Content="Manage champions"
+        />
+        <Button 
+            Grid.Row="0" 
+            Grid.Column="2"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Width="175"
+            Height="80"
+            Margin="0 100 0 0"
+            Content="Manage champions"
+        />
+    </Grid>
+</Window>
