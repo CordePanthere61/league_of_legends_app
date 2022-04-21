@@ -9,7 +9,8 @@ namespace league_of_legends_app.Views
         public ChampionsManagement()
         {
             InitializeComponent();
-            DataContext = new ChampionsManagementViewModel();
+            var vm = new ChampionsManagementViewModel();
+            DataContext = vm;
         }
     }
 }

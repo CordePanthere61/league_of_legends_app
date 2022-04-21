@@ -5,22 +5,13 @@ namespace league_of_legends_app.CORE.ViewModels
 {
     public class MenuViewModel : ViewModelBase<MenuViewModel>
     {
-        public ICommand ManageChampionsCommand => new DelegateCommand(ShowChampionsManagementWindow, CanLaunchWindow);
+        public ICommand ManageChampionsCommand => new DelegateCommand(() => _windowListeners["ManageChampionsCommand"]());
 
-        public MenuViewModel()
+        private readonly Dictionary<string, Action> _windowListeners;
+        
+        public MenuViewModel(Dictionary<string, Action> listeners)
         {
-            
+            _windowListeners = listeners;
         }
-
-        private void ShowChampionsManagementWindow()
-        {
-            
-        }
-
-        private bool CanLaunchWindow()
-        {
-            return true;
-        }
-
     }
 }
