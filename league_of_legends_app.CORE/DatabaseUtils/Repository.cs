@@ -1,4 +1,5 @@
 using System.Data;
+using league_of_legends_app.CORE.Models;
 
 namespace league_of_legends_app.CORE.DatabaseUtils;
 
@@ -15,5 +16,5 @@ public abstract class Repository<T> where T : class
     
     public abstract T Find(int Id);
 
-    public abstract List<T> FindAll();
+    public abstract Task<List<T>> FindAll();
 }

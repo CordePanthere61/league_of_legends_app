@@ -28,7 +28,6 @@ namespace league_of_legends_app.Views
         {
             var window = new ChampionsManagement();
             window.Show();
-            Close();
         }
         
     }
