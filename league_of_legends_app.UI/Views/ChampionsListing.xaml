@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:league_of_legends_app"
         mc:Ignorable="d"
         Title="Champions Listing" 
-        Height="800" 
-        Width="1500"
+        Height="650" 
+        Width="900"
         Background="#132225">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,7 +29,20 @@
             Margin="20"
             SelectionMode="Single"
             ItemsSource="{Binding Champions}"
-        />
+            AutoGenerateColumns="false"
+            >
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Alias" Binding="{Binding Alias}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Specie" Binding="{Binding Specie.Name}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Region" Binding="{Binding Region.Name}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Difficulty" Binding="{Binding Difficulty.Name}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Release Date" Binding="{Binding ReleaseDate}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Price BE" Binding="{Binding PriceBe}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Price RP" Binding="{Binding PriceRp}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Is Melee" Binding="{Binding IsMelee}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         
         <Button 
             Background="#0c3a38"
