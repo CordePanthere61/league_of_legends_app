@@ -23,15 +23,13 @@ public class ChampionRepository : Repository<Champion>
 
     public override Task<List<Champion>> FindAll()
     {
-        return Task.Run(() => _database.Select(
-            BaseSelect,
-            this));
+        return Task.Run(() => _database.Select(BaseSelect,this));
     }
     
     public override Champion Handle(DataRow dr)
     {
         Champion champion = new Champion();
-            champion.Id = dr.Field<int>("champion.Id");
+        champion.Id = dr.Field<int>("champion.Id");
         champion.Specie = new SpecieRepository().Handle(dr);
         champion.Difficulty = new DifficultyRepository().Handle(dr);
         champion.Region = new RegionRepository().Handle(dr);
