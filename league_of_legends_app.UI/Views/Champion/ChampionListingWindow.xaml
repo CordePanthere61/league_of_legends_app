@@ -53,6 +53,7 @@
             Height="40"
             Margin="20"
             Content="Ajouter..."
+            Command="{Binding AddChampionCommand}"
             />
         
         <Button 

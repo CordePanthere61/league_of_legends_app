@@ -7,14 +7,14 @@ namespace league_of_legends_app.CORE.Repositories;
 public class ChampionRepository : Repository<Champion>
 {
 
-    private const string BaseSelect = "select c.id \"champion.Id\", c.id_specie \"champion.IdSpecie\", c.id_difficulty \"champion.IdDifficulty\", c.id_region \"champion.IdRegion\", c.name \"champion.Name\", c.alias \"champion.Alias\", c.release_date \"champion.ReleaseDate\", c.price_be \"champion.PriceBe\", c.price_rp \"champion.PriceRp\", c.quote \"champion.Quote\", c.is_melee \"champion.IsMelee\"," +
-                                      " s.id \"specie.Id\", s.name \"specie.Name\"," +
-                                      " d.id \"difficulty.Id\", d.name \"difficulty.Name\"," +
-                                      " r.id \"region.Id\", r.name \"region.Name\"" +
-                                      " from champion c " +
-                                      " join specie s on s.id = c.id_specie" +
-                                      " join difficulty d on d.id = c.id_difficulty" +
-                                      " join region r on r.id = c.id_region";
+    private const string BaseSelectAll = "select c.id \"champion.Id\", c.id_specie \"champion.IdSpecie\", c.id_difficulty \"champion.IdDifficulty\", c.id_region \"champion.IdRegion\", c.name \"champion.Name\", c.alias \"champion.Alias\", c.release_date \"champion.ReleaseDate\", c.price_be \"champion.PriceBe\", c.price_rp \"champion.PriceRp\", c.quote \"champion.Quote\", c.is_melee \"champion.IsMelee\"," +
+                                         " s.id \"specie.Id\", s.name \"specie.Name\"," +
+                                         " d.id \"difficulty.Id\", d.name \"difficulty.Name\"," +
+                                         " r.id \"region.Id\", r.name \"region.Name\"" +
+                                         " from champion c " +
+                                         " join specie s on s.id = c.id_specie" +
+                                         " join difficulty d on d.id = c.id_difficulty" +
+                                         " join region r on r.id = c.id_region";
     public override Champion Find(int id)
     {
         Champion champion = _database.SelectSingle("select id \"champion.Id\", id_specie \"champion.IdSpecie\", id_difficulty \"champion.IdDifficulty\", id_region \"champion.IdRegion\", name \"champion.Name\", alias \"champion.Alias\", release_date \"champion.ReleaseDate\", price_be \"champion.PriceBe\", price_rp \"champion.PriceRp\", quote \"champion.Quote\", is_melee \"champion.IsMelee\" from champion where id = @id", this, new Parameter("id", id));
@@ -23,7 +23,7 @@ public class ChampionRepository : Repository<Champion>
 
     public override Task<List<Champion>> FindAll()
     {
-        return Task.Run(() => _database.Select(BaseSelect,this));
+        return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
     
     public override Champion Handle(DataRow dr)

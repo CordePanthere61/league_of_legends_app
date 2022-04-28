@@ -7,6 +7,7 @@ namespace league_of_legends_app.Utils;
 public class WindowAdapter : IWindowAdapter
 {
     public Dictionary<string, Action> Commands { get; set; }
+    public Dictionary<string, Action<int>> CommandsWithId { get; set; }
     
     
 }

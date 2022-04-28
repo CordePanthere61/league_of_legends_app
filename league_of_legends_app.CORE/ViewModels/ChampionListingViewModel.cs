@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Windows.Input;
 using league_of_legends_app.CORE.Interfaces;
 using league_of_legends_app.CORE.Models;
@@ -11,7 +12,10 @@ public class ChampionListingViewModel : ViewModelBase<ChampionListingViewModel>
     private ChampionRepository _championRepository;
     private List<Champion> _champions;
     private IWindowAdapter _windowAdapter;
+    private Champion _selectedChampion;
     public ICommand AddChampionCommand => new DelegateCommand(() => _windowAdapter.Commands["AddChampionCommand"]());
+    public ICommand EditChampionCommand => new DelegateCommand(() => _windowAdapter.CommandsWithId["EditChampionCommand"](SelectedChampion.Id));
+    
     
     public ChampionListingViewModel(IWindowAdapter adapter)
     {
@@ -20,6 +24,16 @@ public class ChampionListingViewModel : ViewModelBase<ChampionListingViewModel>
         FetchModels();
     }
 
+    public Champion SelectedChampion
+    {
+        get => _selectedChampion;
+        set
+        {
+            _selectedChampion = value;
+            NotifyPropertyChanged(vm => vm.SelectedChampion);
+        }
+    }
+    
     public List<Champion> Champions
     {
         get => _champions;

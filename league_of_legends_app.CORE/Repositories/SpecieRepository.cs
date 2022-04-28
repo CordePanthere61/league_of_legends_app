@@ -6,15 +6,16 @@ namespace league_of_legends_app.CORE.Repositories;
 
 public class SpecieRepository : Repository<Specie>
 {
+    private const string BaseSelectAll = "select s.id \"specie.Id\", s.name \"specie.Name\" from specie s";
 
     public override Specie Find(int Id)
     {
         throw new NotImplementedException();
     }
 
-    public override Task<List<Specie>> FindAll()
+    public  override Task<List<Specie>> FindAll()
     {
-        throw new NotImplementedException();
+        return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
     
     public override Specie Handle(DataRow dr)

@@ -6,7 +6,6 @@ namespace league_of_legends_app.CORE.DatabaseUtils;
 public abstract class Repository<T> where T : class
 {
     protected Database _database;
-    
     protected Repository()
     {
         this._database = Database.Create();

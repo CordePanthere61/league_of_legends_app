@@ -24,12 +24,23 @@ namespace league_of_legends_app.Views.Champion
             {
                 ["AddChampionCommand"] = AddChampionCommand
             };
+            adapter.CommandsWithId = new Dictionary<string, Action<int>>
+            {
+                ["EditChampionCommand"] = EditChampionCommand 
+            };
             return adapter;
         }
 
         private void AddChampionCommand()
         {
-            
+            var window = new ChampionFormWindow();
+            window.Show();
+        }
+
+        private void EditChampionCommand(int championId)
+        {
+            var window = new ChampionFormWindow(championId);
+            window.Show(); 
         }
     }
 }
