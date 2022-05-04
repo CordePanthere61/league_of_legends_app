@@ -70,7 +70,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         
     }
    
-    #region Propertys
+    #region Properties
     public string Name
     {
         get => _name;
