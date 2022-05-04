@@ -69,7 +69,8 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
     {
         
     }
-    
+   
+    #region Propertys
     public string Name
     {
         get => _name;
@@ -285,6 +286,8 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
 
     public ICommand CancelCommand => new DelegateCommand(_windowAdapter.Commands["CancelCommand"]);
 
+    #endregion
+    
     private void ValidateChampion()
     {
         Champion champion = new Champion
