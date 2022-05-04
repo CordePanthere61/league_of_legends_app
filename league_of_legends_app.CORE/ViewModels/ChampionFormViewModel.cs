@@ -1,11 +1,16 @@
+using System.Windows.Controls;
+using System.Windows.Input;
+using league_of_legends_app.CORE.Interfaces;
 using league_of_legends_app.CORE.Models;
 using league_of_legends_app.CORE.Repositories;
+using league_of_legends_app.CORE.Validators;
 using SimpleMvvmToolkit.Express;
 
 namespace league_of_legends_app.CORE.ViewModels;
 
 public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
 {
+    // Inputs
     private string _name;
     private string _alias;
     private DateTime _releaseDate;
@@ -14,6 +19,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
     private string _quote;
     private bool _isMelee;
 
+    // ComboBoxes
     private Specie _selectedSpecie;
     private List<Specie> _species;
     private Region _selectedRegion;
@@ -21,16 +27,31 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
     private Difficulty _selectedDifficulty;
     private List<Difficulty> _difficulties;
 
+    // ListBoxes
     private List<Role> _roles;
+    private List<Role> _selectedRoles;
     private List<Tag> _tags;
+    private List<Tag> _selectedTags;
 
-    public ChampionFormViewModel(int championId = 0)
+    private IWindowAdapter _windowAdapter;
+    private ChampionRepository _championRepository;
+    private int _championId = 0;
+
+    public ChampionFormViewModel(IWindowAdapter windowAdapter,int championId = 0)
     {
-        if (championId != 0)
+        _windowAdapter = windowAdapter;
+        _championRepository = new ChampionRepository();
+        _championId = championId;
+        if (IsEdit)
         {
             FetchChampionAndRelations();
         }
         FetchRequiredModels();
+    }
+
+    private bool IsEdit
+    {
+        get => _championId != 0;
     }
 
     private async void FetchRequiredModels()
@@ -38,6 +59,10 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         Species = await new SpecieRepository().FindAll();
         Regions = await new RegionRepository().FindAll();
         Difficulties = await new DifficultyRepository().FindAll();
+        Roles = await new RoleRepository().FindAll();
+        Tags = await new TagRepository().FindAll();
+        SelectedTags = new List<Tag>();
+        SelectedRoles = new List<Role>();
     }
 
     private void FetchChampionAndRelations()
@@ -175,6 +200,44 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         }
     }
 
+    public List<Role> Roles
+    {
+        get => _roles;
+        set
+        {
+            _roles = value;
+            NotifyPropertyChanged(vm => vm.Roles);
+        }
+    }
+
+    public List<Role> SelectedRoles
+    {
+        get => _selectedRoles;
+        set
+        {
+            _selectedRoles = value;
+            NotifyPropertyChanged(vm => vm.SelectedRoles);
+        }
+    }
+
+    public ICommand RolesChangedCommand => new DelegateCommand<SelectionChangedEventArgs>((sender) =>
+    {
+        if (sender.AddedItems.Count > 0)
+        {
+            foreach (Role role in sender.AddedItems)
+            {
+                SelectedRoles.Add(role);
+            }
+        }
+        else if (sender.RemovedItems.Count > 0)
+        {
+            foreach (Role role in sender.RemovedItems)
+            {
+                SelectedRoles.Remove(role);
+            }
+        }
+    });
+
     public List<Tag> Tags
     {
         get => _tags;
@@ -184,14 +247,78 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
             NotifyPropertyChanged(vm => vm.Tags);
         }
     }
-    
-    public List<Role> Roles
+
+    public List<Tag> SelectedTags
     {
-        get => _roles;
+        get => _selectedTags;
         set
         {
-            _roles = value;
-            NotifyPropertyChanged(vm => vm.Roles);
+            _selectedTags = value;
+            NotifyPropertyChanged(vm => vm.SelectedTags);
         }
+    }
+
+    public ICommand TagsChangedCommand => new DelegateCommand<SelectionChangedEventArgs>((sender) =>
+    {
+        if (sender.AddedItems.Count > 0)
+        {
+            foreach (Tag tag in sender.AddedItems)
+            {
+                SelectedTags.Add(tag);
+            }
+        }
+        else if (sender.RemovedItems.Count > 0)
+        {
+            foreach (Tag tag in sender.RemovedItems)
+            {
+                SelectedTags.Remove(tag);
+            }
+        }
+    });
+
+    public string ConfirmButtonLabel
+    {
+        get => IsEdit ? "Modifier" : "Ajouter";
+    }
+
+    public ICommand ConfirmButtonCommand => new DelegateCommand(ValidateChampion);
+
+    public ICommand CancelCommand => new DelegateCommand(_windowAdapter.Commands["CancelCommand"]);
+
+    private void ValidateChampion()
+    {
+        Champion champion = new Champion
+        {
+            Name = Name,
+            Alias = Alias,
+            ReleaseDate = ReleaseDate,
+            IsMelee = IsMelee,
+            Quote = Quote,
+            Specie = SelectedSpecie,
+            Difficulty = SelectedDifficulty,
+            Region = SelectedRegion
+        };
+        ChampionValidator validator = new ChampionValidator();
+        if (!validator.Validate(champion))
+        {
+            _windowAdapter.Error("Please fill out every fields.");
+            return;
+        }
+        if (IsEdit)
+        {
+            UpdateChampion();
+            return;
+        }
+        InsertChampion();
+    }
+
+    private void InsertChampion()
+    {
+        _windowAdapter.Success("Champion inserted successfully.");
+    }
+
+    private void UpdateChampion()
+    {
+        _windowAdapter.Success("Champion updated successfully.");
     }
 }

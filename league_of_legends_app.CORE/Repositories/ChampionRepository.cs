@@ -15,6 +15,18 @@ public class ChampionRepository : Repository<Champion>
                                          " join specie s on s.id = c.id_specie" +
                                          " join difficulty d on d.id = c.id_difficulty" +
                                          " join region r on r.id = c.id_region";
+
+    private SpecieRepository _specieRepository;
+    private DifficultyRepository _difficultyRepository;
+    private RegionRepository _regionRepository;
+
+    public ChampionRepository() : base()
+    {
+        _specieRepository = new SpecieRepository();
+        _difficultyRepository = new DifficultyRepository();
+        _regionRepository = new RegionRepository();
+    }
+    
     public override Champion Find(int id)
     {
         Champion champion = _database.SelectSingle("select id \"champion.Id\", id_specie \"champion.IdSpecie\", id_difficulty \"champion.IdDifficulty\", id_region \"champion.IdRegion\", name \"champion.Name\", alias \"champion.Alias\", release_date \"champion.ReleaseDate\", price_be \"champion.PriceBe\", price_rp \"champion.PriceRp\", quote \"champion.Quote\", is_melee \"champion.IsMelee\" from champion where id = @id", this, new Parameter("id", id));
@@ -30,9 +42,9 @@ public class ChampionRepository : Repository<Champion>
     {
         Champion champion = new Champion();
         champion.Id = dr.Field<int>("champion.Id");
-        champion.Specie = new SpecieRepository().Handle(dr);
-        champion.Difficulty = new DifficultyRepository().Handle(dr);
-        champion.Region = new RegionRepository().Handle(dr);
+        champion.Specie = _specieRepository.Handle(dr);
+        champion.Difficulty = _difficultyRepository.Handle(dr);
+        champion.Region = _regionRepository.Handle(dr);
         champion.Name = dr.Field<string>("champion.Name");
         champion.Alias = dr.Field<string>("champion.Alias");
         champion.ReleaseDate = dr.Field<DateTime>("champion.ReleaseDate").Date;

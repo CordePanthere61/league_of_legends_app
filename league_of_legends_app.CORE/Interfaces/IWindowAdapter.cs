@@ -6,4 +6,6 @@ public interface IWindowAdapter
     
     public Dictionary<string, Action<int>> CommandsWithId { get; set; }
 
+    public void Error(string message);
+    public void Success(string message);
 }

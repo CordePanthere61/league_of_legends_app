@@ -13,6 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="PresentationFramework">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.4\PresentationFramework.dll</HintPath>
+      </Reference>
       <Reference Include="System.Configuration.ConfigurationManager">
         <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.4\System.Configuration.ConfigurationManager.dll</HintPath>
       </Reference>
