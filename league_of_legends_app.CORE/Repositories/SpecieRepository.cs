@@ -8,7 +8,7 @@ public class SpecieRepository : Repository<Specie>
 {
     private const string BaseSelectAll = "select s.id \"specie.Id\", s.name \"specie.Name\" from specie s";
 
-    public override Specie Find(int Id)
+    public override Task<Specie> Find(int Id)
     {
         throw new NotImplementedException();
     }

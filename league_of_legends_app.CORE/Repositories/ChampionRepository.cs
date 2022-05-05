@@ -16,6 +16,9 @@ public class ChampionRepository : Repository<Champion>
                                          " join difficulty d on d.id = c.id_difficulty" +
                                          " join region r on r.id = c.id_region";
 
+    private const string BaseSelectSingle = BaseSelectAll + " where c.id = @id";
+
+
     private SpecieRepository _specieRepository;
     private DifficultyRepository _difficultyRepository;
     private RegionRepository _regionRepository;
@@ -27,10 +30,9 @@ public class ChampionRepository : Repository<Champion>
         _regionRepository = new RegionRepository();
     }
     
-    public override Champion Find(int id)
+    public override Task<Champion> Find(int id)
     {
-        Champion champion = _database.SelectSingle("select id \"champion.Id\", id_specie \"champion.IdSpecie\", id_difficulty \"champion.IdDifficulty\", id_region \"champion.IdRegion\", name \"champion.Name\", alias \"champion.Alias\", release_date \"champion.ReleaseDate\", price_be \"champion.PriceBe\", price_rp \"champion.PriceRp\", quote \"champion.Quote\", is_melee \"champion.IsMelee\" from champion where id = @id", this, new Parameter("id", id));
-        return champion;
+        return Task.Run(() => _database.SelectSingle(BaseSelectSingle, this, new Parameter("id", id)));
     }
 
     public override Task<List<Champion>> FindAll()

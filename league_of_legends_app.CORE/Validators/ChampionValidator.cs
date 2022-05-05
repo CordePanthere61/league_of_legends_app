@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.RegularExpressions;
 using league_of_legends_app.CORE.Interfaces;
 using league_of_legends_app.CORE.Models;
 

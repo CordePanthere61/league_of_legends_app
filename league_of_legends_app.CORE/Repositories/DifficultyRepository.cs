@@ -8,7 +8,7 @@ public class DifficultyRepository : Repository<Difficulty>
 {
     private const string BaseSelectAll = "select d.id \"difficulty.Id\", d.name \"difficulty.Name\" from difficulty d";
     
-    public override Difficulty Find(int Id)
+    public override Task<Difficulty> Find(int Id)
     {
         throw new NotImplementedException();
     }

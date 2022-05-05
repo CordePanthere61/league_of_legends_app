@@ -18,12 +18,15 @@ public partial class ChampionFormWindow : Window
         if (championId != 0)
         {
             vm = new ChampionFormViewModel(adapter, championId);
+            DataContext = vm;
+            vm.UpdateRecommendedRoles(RolesListBox);
+            vm.UpdateChampionTags(TagsListBox);
         }
         else
         {
             vm = new ChampionFormViewModel(adapter);
+            DataContext = vm;
         }
-        DataContext = vm;
     }
     
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

@@ -12,19 +12,19 @@ public class ChampionListingViewModel : ViewModelBase<ChampionListingViewModel>
     private ChampionRepository _championRepository;
     private List<Champion> _champions;
     private IWindowAdapter _windowAdapter;
-    private Champion _selectedChampion;
-    public ICommand AddChampionCommand => new DelegateCommand(() => _windowAdapter.Commands["AddChampionCommand"]());
-    public ICommand EditChampionCommand => new DelegateCommand(() => _windowAdapter.CommandsWithId["EditChampionCommand"](SelectedChampion.Id));
+    private Champion? _selectedChampion;
+    public ICommand AddChampionCommand => new DelegateCommand(_windowAdapter.Commands["AddChampionCommand"]);
+    public ICommand EditChampionCommand => new DelegateCommand(EditChampion);
     
     
     public ChampionListingViewModel(IWindowAdapter adapter)
     {
-        this._championRepository = new ChampionRepository();
-        this._windowAdapter = adapter;
+        _championRepository = new ChampionRepository();
+        _windowAdapter = adapter;
         FetchModels();
     }
 
-    public Champion SelectedChampion
+    public Champion? SelectedChampion
     {
         get => _selectedChampion;
         set
@@ -48,5 +48,15 @@ public class ChampionListingViewModel : ViewModelBase<ChampionListingViewModel>
     { 
         _champions = await _championRepository.FindAll();
         Champions = _champions;
+    }
+
+    private void EditChampion()
+    {
+        if (SelectedChampion == null)
+        {
+            _windowAdapter.Error("No champion selected.");
+            return;
+        }
+        _windowAdapter.CommandsWithId["EditChampionCommand"](SelectedChampion.Id);
     }
 }

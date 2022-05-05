@@ -33,20 +33,25 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
     private List<Tag> _tags;
     private List<Tag> _selectedTags;
 
+    private TaskCompletionSource _areModelsLoaded;
     private IWindowAdapter _windowAdapter;
     private ChampionRepository _championRepository;
+    private RoleRepository _roleRepository;
+    private TagRepository _tagRepository;
     private int _championId = 0;
-
+    
     public ChampionFormViewModel(IWindowAdapter windowAdapter,int championId = 0)
     {
         _windowAdapter = windowAdapter;
         _championRepository = new ChampionRepository();
+        _tagRepository = new TagRepository();
+        _roleRepository = new RoleRepository();
         _championId = championId;
+        FetchRequiredModels();
         if (IsEdit)
         {
-            FetchChampionAndRelations();
+            FetchSelectedChampionAndRelations(); 
         }
-        FetchRequiredModels();
     }
 
     private bool IsEdit
@@ -56,18 +61,49 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
 
     private async void FetchRequiredModels()
     {
+        _areModelsLoaded = new TaskCompletionSource();
         Species = await new SpecieRepository().FindAll();
         Regions = await new RegionRepository().FindAll();
         Difficulties = await new DifficultyRepository().FindAll();
-        Roles = await new RoleRepository().FindAll();
-        Tags = await new TagRepository().FindAll();
+        Roles = await _roleRepository.FindAll();
+        Tags = await _tagRepository.FindAll();
         SelectedTags = new List<Tag>();
         SelectedRoles = new List<Role>();
+        _areModelsLoaded.SetResult();
     }
 
-    private void FetchChampionAndRelations()
+    private async void FetchSelectedChampionAndRelations()
     {
-        
+        var champion = await _championRepository.Find(_championId);
+        Name = champion.Name!;
+        Alias = champion.Alias!;
+        ReleaseDate = (DateTime) champion.ReleaseDate!;
+        IsMelee = champion.IsMelee;
+        PriceBe = champion.PriceBe;
+        PriceRp = champion.PriceRp;
+        Quote = champion.Quote!;
+        await _areModelsLoaded.Task;
+        SelectedSpecie = champion.Specie;
+        SelectedRegion = champion.Region;
+        SelectedDifficulty = champion.Difficulty;
+    }
+
+    public async void UpdateRecommendedRoles(ListBox box)
+    {
+        await _areModelsLoaded.Task;
+        foreach (Role role in await _roleRepository.FindRecommendedRolesForChampion(_championId))
+        {
+            box.SelectedItems.Add(role);
+        }
+    }
+
+    public async void UpdateChampionTags(ListBox box)
+    {
+        await _areModelsLoaded.Task;
+        foreach (Tag tag in await _tagRepository.FindChampionTagsForChampion(_championId))
+        {
+            box.SelectedItems.Add(tag);
+        }
     }
    
     #region Properties

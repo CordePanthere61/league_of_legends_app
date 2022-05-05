@@ -246,7 +246,7 @@
             FontSize="18"
             ItemsSource="{Binding Difficulties}"
             DisplayMemberPath="Name"
-            SelectedItem="{Binding SelectedDifficulty}"
+            SelectedItem="{Binding SelectedDifficulty, Mode=TwoWay}"
             />
         
         <TextBlock 
@@ -261,6 +261,7 @@
         />
         
         <ListBox 
+            x:Name="RolesListBox"
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="4"
@@ -289,7 +290,8 @@
             FontSize="18"
         />
         
-        <ListBox 
+        <ListBox
+            x:Name="TagsListBox"
             Grid.Row="2"
             Grid.RowSpan="2"
             Grid.Column="4"

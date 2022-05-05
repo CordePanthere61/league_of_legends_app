@@ -8,7 +8,7 @@ public class RegionRepository : Repository<Region>
 {
     private const string BaseSelectAll = "select r.id \"region.Id\", r.name \"region.Name\" from region r";
     
-    public override Region Find(int Id)
+    public override Task<Region> Find(int Id)
     {
         throw new NotImplementedException();
     }

@@ -8,7 +8,12 @@ public class TagRepository : Repository<Tag>
 {
     private const string BaseSelectAll = "select t.id \"tag.Id\", t.name \"tag.Name\" from tag t";
 
-    public override Tag Find(int Id)
+    private const string ChampionTagSelectAll = "select t.id \"tag.Id\", t.name \"tag.Name\"" +
+                                                " from tag t" +
+                                                " join champion_tag ct on t.id = ct.id_tag" +
+                                                " where ct.id_champion = @id";
+
+    public override Task<Tag> Find(int Id)
     {
         throw new NotImplementedException();
     }
@@ -16,6 +21,11 @@ public class TagRepository : Repository<Tag>
     public override Task<List<Tag>> FindAll()
     {
         return Task.Run(() => _database.Select(BaseSelectAll, this));
+    }
+
+    public Task<List<Tag>> FindChampionTagsForChampion(int championId)
+    {
+        return Task.Run(() => _database.Select(ChampionTagSelectAll, this, new Parameter("id", championId)));
     }
 
     public override Tag Handle(DataRow dr)
