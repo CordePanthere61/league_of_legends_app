@@ -75,6 +75,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
     private async void FetchSelectedChampionAndRelations()
     {
         var champion = await _championRepository.Find(_championId);
+        await _areModelsLoaded.Task;
         Name = champion.Name!;
         Alias = champion.Alias!;
         ReleaseDate = (DateTime) champion.ReleaseDate!;
@@ -82,7 +83,6 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         PriceBe = champion.PriceBe;
         PriceRp = champion.PriceRp;
         Quote = champion.Quote!;
-        await _areModelsLoaded.Task;
         SelectedSpecie = champion.Specie;
         SelectedRegion = champion.Region;
         SelectedDifficulty = champion.Difficulty;
@@ -345,18 +345,24 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         }
         if (IsEdit)
         {
-            UpdateChampion();
+            UpdateChampion(champion);
             return;
         }
-        InsertChampion();
+        InsertChampion(champion);
     }
 
-    private void InsertChampion()
+    private async void InsertChampion(Champion champion)
     {
-        _windowAdapter.Success("Champion inserted successfully.");
+        int insertedId = await _championRepository.Insert(champion);
+        if (insertedId != 0)
+        {
+            _windowAdapter.Success("Champion inserted successfully.");
+            return;
+        }
+        _windowAdapter.Error("An error has occured");
     }
 
-    private void UpdateChampion()
+    private void UpdateChampion(Champion champion)
     {
         _windowAdapter.Success("Champion updated successfully.");
     }

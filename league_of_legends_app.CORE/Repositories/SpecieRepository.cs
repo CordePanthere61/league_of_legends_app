@@ -17,7 +17,17 @@ public class SpecieRepository : Repository<Specie>
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
-    
+
+    public override Task<int> Insert(Specie entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<int> Update(Specie entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public override Specie Handle(DataRow dr)
     {
         Specie specie = new Specie();

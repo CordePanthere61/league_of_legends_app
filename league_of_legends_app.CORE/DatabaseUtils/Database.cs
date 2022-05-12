@@ -1,5 +1,7 @@
 using System.Configuration;
 using System.Data;
+using System.Security.Cryptography;
+using System.Windows.Media;
 using Npgsql;
 
 namespace league_of_legends_app.CORE.DatabaseUtils;
@@ -122,6 +124,28 @@ public class Database
             }
 
             return null;
+        }
+
+        public int Insert(String query, params Parameter[] parameters)
+        {
+            int insertedId = 0;
+            try
+            {
+                OpenConnection();
+                NpgsqlCommand cmd = CreateCommand(query, parameters);
+                cmd.Prepare();
+                insertedId = (int) (cmd.ExecuteScalar() ?? 0);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+
+            return insertedId;
         }
 
         private NpgsqlCommand CreateCommand(string sql, Parameter[] parameters)

@@ -17,7 +17,17 @@ public class DifficultyRepository : Repository<Difficulty>
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
-    
+
+    public override Task<int> Insert(Difficulty entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<int> Update(Difficulty entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public override Difficulty Handle(DataRow dr)
     {
         Difficulty difficulty = new Difficulty();

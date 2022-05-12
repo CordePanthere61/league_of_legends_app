@@ -16,6 +16,10 @@ public class ChampionRepository : Repository<Champion>
                                          " join difficulty d on d.id = c.id_difficulty" +
                                          " join region r on r.id = c.id_region";
 
+    private const string BaseInsert = "insert into champion(id_specie, id_difficulty, id_region, name, alias, release_date, price_be, price_rp, quote, is_melee)" +
+                                      " values (@id_specie, @id_difficulty, @id_region, @name, @alias, @release_date, @price_be, @price_rp, @quote, @is_melee)" +
+                                      " returning id";
+
     private const string BaseSelectSingle = BaseSelectAll + " where c.id = @id";
 
 
@@ -39,7 +43,29 @@ public class ChampionRepository : Repository<Champion>
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
-    
+
+    public override Task<int> Insert(Champion champion)
+    {
+        return Task.Run(() => _database.Insert(BaseInsert, new[]
+        {
+            new Parameter("id_specie", champion.Specie.Id),
+            new Parameter("id_difficulty", champion.Difficulty.Id),
+            new Parameter("id_region", champion.Region.Id),
+            new Parameter("name", champion.Name!),
+            new Parameter("alias", champion.Alias!),
+            new Parameter("release_date", champion.ReleaseDate!),
+            new Parameter("price_be", champion.PriceBe),
+            new Parameter("price_rp", champion.PriceRp),
+            new Parameter("quote", champion.Quote!),
+            new Parameter("is_melee", champion.IsMelee)
+        }));
+    }
+
+    public override Task<int> Update(Champion entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public override Champion Handle(DataRow dr)
     {
         Champion champion = new Champion();

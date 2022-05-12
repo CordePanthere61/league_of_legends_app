@@ -16,4 +16,7 @@ public abstract class Repository<T> where T : class
     public abstract Task<T> Find(int Id);
 
     public abstract Task<List<T>> FindAll();
+
+    public abstract Task<int> Insert(T entity);
+    public abstract Task<int> Update(T entity);
 }

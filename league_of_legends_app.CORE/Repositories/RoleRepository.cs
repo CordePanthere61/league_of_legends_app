@@ -21,7 +21,17 @@ public class RoleRepository : Repository<Role>
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
-    
+
+    public override Task<int> Insert(Role entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<int> Update(Role entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<List<Role>> FindRecommendedRolesForChampion(int championId)
     {
         return Task.Run(() => _database.Select(RecommendedRolesSelectAll, this, new Parameter("id", championId)));

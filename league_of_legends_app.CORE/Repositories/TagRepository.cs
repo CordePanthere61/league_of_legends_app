@@ -23,6 +23,16 @@ public class TagRepository : Repository<Tag>
         return Task.Run(() => _database.Select(BaseSelectAll, this));
     }
 
+    public override Task<int> Insert(Tag entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<int> Update(Tag entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<List<Tag>> FindChampionTagsForChampion(int championId)
     {
         return Task.Run(() => _database.Select(ChampionTagSelectAll, this, new Parameter("id", championId)));

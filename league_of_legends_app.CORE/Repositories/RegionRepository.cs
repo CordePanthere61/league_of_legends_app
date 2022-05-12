@@ -17,6 +17,16 @@ public class RegionRepository : Repository<Region>
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
+
+    public override Task<int> Insert(Region entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<int> Update(Region entity)
+    {
+        throw new NotImplementedException();
+    }
     
     public override Region Handle(DataRow dr)
     {
