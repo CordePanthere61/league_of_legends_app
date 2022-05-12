@@ -19,4 +19,5 @@ public abstract class Repository<T> where T : class
 
     public abstract Task<int> Insert(T entity);
     public abstract Task<int> Update(T entity);
+    public abstract Task Delete(T entity);
 }

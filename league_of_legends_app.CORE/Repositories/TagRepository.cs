@@ -13,24 +13,15 @@ public class TagRepository : Repository<Tag>
                                                 " join champion_tag ct on t.id = ct.id_tag" +
                                                 " where ct.id_champion = @id";
 
-    public override Task<Tag> Find(int Id)
-    {
-        throw new NotImplementedException();
-    }
+    private const string DeleteAllRecommendedTagsForChampion = "delete from champion_tag" +
+                                                               " where id_champion = @id";
+
+    private const string InsertRecommendTagForChampion = "insert into champion_tag(id_champion, id_tag)" +
+                                                         " values (@id_champion, @id_tag)";
 
     public override Task<List<Tag>> FindAll()
     {
         return Task.Run(() => _database.Select(BaseSelectAll, this));
-    }
-
-    public override Task<int> Insert(Tag entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Task<int> Update(Tag entity)
-    {
-        throw new NotImplementedException();
     }
 
     public Task<List<Tag>> FindChampionTagsForChampion(int championId)
@@ -45,4 +36,44 @@ public class TagRepository : Repository<Tag>
         tag.Name = dr.Field<string>("tag.Name");
         return tag;
     }
+
+    public async Task InsertOrUpdateChampionTags(int championId, List<Tag> selectedTags)
+    {
+        await Task.Run(() =>
+        {
+            _database.Delete(DeleteAllRecommendedTagsForChampion, new Parameter("id", championId));
+            foreach (Tag tag in selectedTags)
+            {
+                _database.Insert(InsertRecommendTagForChampion, new[]
+                {
+                    new Parameter("id_champion", championId),
+                    new Parameter("id_tag", tag.Id)
+                });
+            }
+        });
+    }
+    
+    #region NotImplemented
+    
+    public override Task<Tag> Find(int Id)
+    {
+        throw new NotImplementedException();
+    }
+    
+    public override Task<int> Insert(Tag entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<int> Update(Tag entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task Delete(Tag entity)
+    {
+        throw new NotImplementedException();
+    }
+    
+    #endregion
 }

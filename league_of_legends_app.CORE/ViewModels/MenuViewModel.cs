@@ -8,6 +8,8 @@ namespace league_of_legends_app.CORE.ViewModels
     {
         public ICommand ManageChampionsCommand => new DelegateCommand(() => _windowAdapter.Commands["ManageChampionsCommand"]());
 
+        public ICommand ManageStoriesCommand => new DelegateCommand(() => _windowAdapter.Commands["ManageStoriesCommand"]());
+
         private readonly IWindowAdapter _windowAdapter;
 
         public MenuViewModel(IWindowAdapter adapter)

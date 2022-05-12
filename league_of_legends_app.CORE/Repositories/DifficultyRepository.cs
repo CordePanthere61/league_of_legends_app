@@ -8,16 +8,26 @@ public class DifficultyRepository : Repository<Difficulty>
 {
     private const string BaseSelectAll = "select d.id \"difficulty.Id\", d.name \"difficulty.Name\" from difficulty d";
     
-    public override Task<Difficulty> Find(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
     public override Task<List<Difficulty>> FindAll()
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
 
+    public override Difficulty Handle(DataRow dr)
+    {
+        Difficulty difficulty = new Difficulty();
+        difficulty.Id = dr.Field<int>("difficulty.Id");
+        difficulty.Name = dr.Field<string>("difficulty.Name");
+        return difficulty;
+    }
+    
+    #region NotImplemented
+    
+    public override Task<Difficulty> Find(int Id)
+    {
+        throw new NotImplementedException();
+    }
+    
     public override Task<int> Insert(Difficulty entity)
     {
         throw new NotImplementedException();
@@ -28,11 +38,10 @@ public class DifficultyRepository : Repository<Difficulty>
         throw new NotImplementedException();
     }
 
-    public override Difficulty Handle(DataRow dr)
+    public override Task Delete(Difficulty entity)
     {
-        Difficulty difficulty = new Difficulty();
-        difficulty.Id = dr.Field<int>("difficulty.Id");
-        difficulty.Name = dr.Field<string>("difficulty.Name");
-        return difficulty;
+        throw new NotImplementedException();
     }
+    
+    #endregion
 }

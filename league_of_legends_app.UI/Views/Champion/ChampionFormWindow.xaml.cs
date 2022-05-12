@@ -37,7 +37,7 @@ public partial class ChampionFormWindow : Window
 
     private WindowAdapter InitializeAdapter()
     {
-        var adapter = new WindowAdapter();
+        var adapter = new WindowAdapter(this);
         adapter.Commands = new Dictionary<string, Action>
         {
             ["CancelCommand"] = CancelCommand

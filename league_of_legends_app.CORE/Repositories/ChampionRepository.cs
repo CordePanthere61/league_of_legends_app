@@ -7,7 +7,7 @@ namespace league_of_legends_app.CORE.Repositories;
 public class ChampionRepository : Repository<Champion>
 {
 
-    private const string BaseSelectAll = "select c.id \"champion.Id\", c.id_specie \"champion.IdSpecie\", c.id_difficulty \"champion.IdDifficulty\", c.id_region \"champion.IdRegion\", c.name \"champion.Name\", c.alias \"champion.Alias\", c.release_date \"champion.ReleaseDate\", c.price_be \"champion.PriceBe\", c.price_rp \"champion.PriceRp\", c.quote \"champion.Quote\", c.is_melee \"champion.IsMelee\"," +
+    private const string BaseSelect = "select c.id \"champion.Id\", c.id_specie \"champion.IdSpecie\", c.id_difficulty \"champion.IdDifficulty\", c.id_region \"champion.IdRegion\", c.name \"champion.Name\", c.alias \"champion.Alias\", c.release_date \"champion.ReleaseDate\", c.price_be \"champion.PriceBe\", c.price_rp \"champion.PriceRp\", c.quote \"champion.Quote\", c.is_melee \"champion.IsMelee\"," +
                                          " s.id \"specie.Id\", s.name \"specie.Name\"," +
                                          " d.id \"difficulty.Id\", d.name \"difficulty.Name\"," +
                                          " r.id \"region.Id\", r.name \"region.Name\"" +
@@ -20,14 +20,33 @@ public class ChampionRepository : Repository<Champion>
                                       " values (@id_specie, @id_difficulty, @id_region, @name, @alias, @release_date, @price_be, @price_rp, @quote, @is_melee)" +
                                       " returning id";
 
-    private const string BaseSelectSingle = BaseSelectAll + " where c.id = @id";
+    private const string BaseUpdate = "update champion" +
+                                      " set id_specie = @id_specie," +
+                                      " id_difficulty = @id_difficulty," +
+                                      " id_region = @id_region," +
+                                      " name = @name," +
+                                      " alias = @alias," +
+                                      " release_date = @release_date," +
+                                      " price_be = @price_be," +
+                                      " price_rp = @price_rp," +
+                                      " quote = @quote," +
+                                      " is_melee = @is_melee" +
+                                      " where id = @id" +
+                                      " returning champion.id as id";
+
+    private const string BaseDelete = "delete from champion" +
+                                      " where id = @id";
+
+    private const string BaseSelectSingle = BaseSelect + " where c.id = @id";
+
+    private const string BaseSelectAll = BaseSelect + " order by c.name";
 
 
     private SpecieRepository _specieRepository;
     private DifficultyRepository _difficultyRepository;
     private RegionRepository _regionRepository;
 
-    public ChampionRepository() : base()
+    public ChampionRepository()
     {
         _specieRepository = new SpecieRepository();
         _difficultyRepository = new DifficultyRepository();
@@ -61,9 +80,30 @@ public class ChampionRepository : Repository<Champion>
         }));
     }
 
-    public override Task<int> Update(Champion entity)
+    public override Task<int> Update(Champion champion)
     {
-        throw new NotImplementedException();
+        return Task.Run(() => _database.Update(BaseUpdate, new[]
+        {
+            new Parameter("id_specie", champion.Specie.Id),
+            new Parameter("id_difficulty", champion.Difficulty.Id),
+            new Parameter("id_region", champion.Region.Id),
+            new Parameter("name", champion.Name!),
+            new Parameter("alias", champion.Alias!),
+            new Parameter("release_date", champion.ReleaseDate!),
+            new Parameter("price_be", champion.PriceBe),
+            new Parameter("price_rp", champion.PriceRp),
+            new Parameter("quote", champion.Quote!),
+            new Parameter("is_melee", champion.IsMelee),
+            new Parameter("id", champion.Id)
+        }));
+    }
+
+    public override async Task Delete(Champion champion)
+    {
+        await Task.Run(() =>
+        {
+            _database.Delete(BaseDelete, new Parameter("id", champion.Id));
+        });
     }
 
     public override Champion Handle(DataRow dr)

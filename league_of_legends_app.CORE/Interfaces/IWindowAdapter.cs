@@ -8,4 +8,5 @@ public interface IWindowAdapter
 
     public void Error(string message);
     public void Success(string message);
+    public void Close();
 }

@@ -1,17 +1,17 @@
-<Window x:Class="league_of_legends_app.Views.Champion.ChampionListingWindow"
+﻿<Window x:Class="league_of_legends_app.Views.Story.StoryListingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:league_of_legends_app"
+        xmlns:local="clr-namespace:league_of_legends_app.Views.Story"
         mc:Ignorable="d"
-        Title="Champions Listing" 
-        Height="650" 
+        Title="Stories Listing" 
+        Height="500" 
         Width="900"
         Background="#132225"
-        Activated="ReloadList">
+        Padding="0 30 0 30">
     <Grid>
-        <Grid.ColumnDefinitions>
+    <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -20,29 +20,23 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions> 
         
         <DataGrid 
-            Grid.Column="0"
+            Grid.Column="1"
             Grid.Row="0"
-            Grid.ColumnSpan="5"
+            Grid.ColumnSpan="3"
             Margin="20"
             SelectionMode="Single"
-            ItemsSource="{Binding Champions}"
+            ItemsSource="{Binding Stories}"
             AutoGenerateColumns="false"
-            SelectedItem="{Binding SelectedChampion}"
+            SelectedItem="{Binding SelectedStory}"
             >
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Alias" Binding="{Binding Alias}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Specie" Binding="{Binding Specie.Name}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Region" Binding="{Binding Region.Name}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Difficulty" Binding="{Binding Difficulty.Name}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Release Date" Binding="{Binding ReleaseDate}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Price BE" Binding="{Binding PriceBe}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Price RP" Binding="{Binding PriceRp}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Is Melee" Binding="{Binding IsMelee}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Author" Binding="{Binding Author.Name}"/>
             </DataGrid.Columns>
         </DataGrid>
         

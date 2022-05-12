@@ -335,7 +335,9 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
             Quote = Quote,
             Specie = SelectedSpecie,
             Difficulty = SelectedDifficulty,
-            Region = SelectedRegion
+            Region = SelectedRegion,
+            PriceBe = PriceBe,
+            PriceRp = PriceRp
         };
         ChampionValidator validator = new ChampionValidator();
         if (!validator.Validate(champion))
@@ -356,14 +358,27 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         int insertedId = await _championRepository.Insert(champion);
         if (insertedId != 0)
         {
+            await _roleRepository.InsertOrUpdateRecommendRoles(insertedId, SelectedRoles);
+            await _tagRepository.InsertOrUpdateChampionTags(insertedId, SelectedTags);
             _windowAdapter.Success("Champion inserted successfully.");
+            _windowAdapter.Close();
             return;
         }
         _windowAdapter.Error("An error has occured");
     }
 
-    private void UpdateChampion(Champion champion)
+    private async void UpdateChampion(Champion champion)
     {
-        _windowAdapter.Success("Champion updated successfully.");
+        champion.Id = _championId;
+        int updatedId = await _championRepository.Update(champion);
+        if (updatedId != 0)
+        {
+            await _roleRepository.InsertOrUpdateRecommendRoles(champion.Id, SelectedRoles);
+            await _tagRepository.InsertOrUpdateChampionTags(champion.Id, SelectedTags);
+            _windowAdapter.Success("Champion updated successfully.");
+            _windowAdapter.Close();
+            return;
+        }
+        _windowAdapter.Error("An error has occured");
     }
 }
