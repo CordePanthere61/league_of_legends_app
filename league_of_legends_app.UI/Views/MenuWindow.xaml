@@ -54,7 +54,8 @@
             Width="175"
             Height="80"
             Margin="0 100 0 0"
-            Content="Manage champions"
+            Content="Manage Stories"
+            Command="{Binding ManageStoriesCommand}"
         />
         <Button
             Background="#0c3a38"
