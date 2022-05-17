@@ -9,7 +9,8 @@
         Title="StoryFormWindow"
         Height="600"
         Width="1000"
-        Background="#132225">
+        Background="#132225"
+        Activated="ReloadList">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

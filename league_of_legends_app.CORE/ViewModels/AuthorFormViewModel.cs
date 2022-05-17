@@ -34,7 +34,7 @@ public class AuthorFormViewModel : ViewModelBase<AuthorFormViewModel>
 
     private async void InsertAuthor()
     {
-        if (Name.Equals(null) || Name.Equals(""))
+        if (string.IsNullOrEmpty(Name))
         {
             _windowAdapter.Error("Please fill out the \"Name\" field.");
             return;

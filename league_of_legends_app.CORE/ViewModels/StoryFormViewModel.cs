@@ -166,6 +166,8 @@ public class StoryFormViewModel : ViewModelBase<StoryFormViewModel>
     {
         get => IsEdit ? "Modifier" : "Ajouter";
     }
+
+    public ICommand ConfirmButtonCommand => new DelegateCommand(ValidateStory);
     
     public ICommand CancelCommand => new DelegateCommand(_windowAdapter.Close);
 
@@ -190,6 +192,10 @@ public class StoryFormViewModel : ViewModelBase<StoryFormViewModel>
     });
     
     #endregion
-    
+
+    private void ValidateStory()
+    {
+        
+    }
     
 }
