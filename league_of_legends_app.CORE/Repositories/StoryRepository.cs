@@ -7,11 +7,11 @@ namespace league_of_legends_app.CORE.Repositories;
 public class StoryRepository : Repository<Story>
 {
 
-    private const string BaseSelect = "select s.id \"story.Id\", s.name \"story.Name\", s.text \"story.Text\"" +
-                                      " reg.id \"region.Id\", reg.name \"region.Name\"" +
+    private const string BaseSelect = "select s.id \"story.Id\", s.name \"story.Name\", s.text \"story.Text\"," +
+                                      " r.id \"region.Id\", r.name \"region.Name\"," +
                                       " a.id \"author.Id\", a.name \"author.Name\"" +
                                       " from story s" +
-                                      " join region reg on r.id = s.id_region" +
+                                      " join region r on r.id = s.id_region" +
                                       " join author a on a.id = s.id_author";
 
     private const string BaseSelectAll = BaseSelect + " order by s.name";
