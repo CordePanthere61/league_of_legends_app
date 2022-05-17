@@ -37,6 +37,11 @@ public class ChampionRepository : Repository<Champion>
     private const string BaseDelete = "delete from champion" +
                                       " where id = @id";
 
+    private const string SelectStoryChampions = "select c.id \"champion.Id\", c.name \"champion.Name\"" +
+                                                " from champion c" +
+                                                " join champion_story cs" +
+                                                " where cs.id_story = @id";
+
     private const string BaseSelectSingle = BaseSelect + " where c.id = @id";
 
     private const string BaseSelectAll = BaseSelect + " order by c.name";
@@ -61,6 +66,11 @@ public class ChampionRepository : Repository<Champion>
     public override Task<List<Champion>> FindAll()
     {
         return Task.Run(() => _database.Select(BaseSelectAll,this));
+    }
+
+    public Task<List<Champion>> FindAssociatedChampionsToStory(int storyId)
+    {
+        return Task.Run((() => _database.Select(SelectStoryChampions, this, new Parameter("id", storyId))));
     }
 
     public override Task<int> Insert(Champion champion)

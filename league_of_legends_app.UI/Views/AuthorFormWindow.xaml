@@ -1,0 +1,67 @@
+﻿<Window x:Class="league_of_legends_app.Views.AuthorFormWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:league_of_legends_app.Views"
+        mc:Ignorable="d"
+        Title="AuthorFormWindow"
+        Height="250" 
+        Width="400"
+        Background="#132225">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock 
+            Grid.Column="0"
+            Grid.Row="0"
+            VerticalAlignment="Top"
+            Height="30"
+            Margin="20 0"
+            Text="Name"
+            Foreground="#c6b366" 
+            FontSize="18"
+        />
+        
+        <TextBox 
+            Grid.Column="0" 
+            Grid.Row="0" 
+            Grid.ColumnSpan="2"
+            Height="30"
+            Margin="20 0"
+            FontSize="18"
+            Text="{Binding Name}"
+        />
+        
+        <Button 
+            Grid.Column="0" 
+            Grid.Row="1"
+            Background="#0c3a38"
+            Foreground="#c6b366"
+            BorderBrush="#c6b366"
+            Margin="20"
+            Height="40"
+            Content="Annuler"
+            Command="{Binding CancelCommand}"
+        />
+        
+        <Button 
+            Grid.Column="1" 
+            Grid.Row="1"
+            Background="#0c3a38"
+            Foreground="#c6b366"
+            BorderBrush="#c6b366"
+            Margin="20"
+            Height="40"
+            Content="Ajouter"
+            Command="{Binding ConfirmCommand}"
+        /> 
+    </Grid>
+</Window>

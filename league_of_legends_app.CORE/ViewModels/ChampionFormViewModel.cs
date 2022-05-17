@@ -320,7 +320,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
 
     public ICommand ConfirmButtonCommand => new DelegateCommand(ValidateChampion);
 
-    public ICommand CancelCommand => new DelegateCommand(_windowAdapter.Commands["CancelCommand"]);
+    public ICommand CancelCommand => new DelegateCommand(_windowAdapter.Close);
 
     #endregion
     

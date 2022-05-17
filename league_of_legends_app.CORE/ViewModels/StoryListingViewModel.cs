@@ -1,4 +1,5 @@
-﻿using league_of_legends_app.CORE.Interfaces;
+﻿using System.Windows.Input;
+using league_of_legends_app.CORE.Interfaces;
 using league_of_legends_app.CORE.Models;
 using league_of_legends_app.CORE.Repositories;
 using SimpleMvvmToolkit.Express;
@@ -13,6 +14,11 @@ public class StoryListingViewModel : ViewModelBase<StoryListingViewModel>
 
     private List<Story> _stories;
     private Story _selectedStory;
+    
+    public ICommand AddStoryCommand => new DelegateCommand(_windowAdapter.Commands["AddStoryCommand"]);
+    public ICommand EditStoryCommand => new DelegateCommand(EditStory);
+
+    public ICommand DeleteStoryCommand => new DelegateCommand(DeleteStory);
     
     public StoryListingViewModel(IWindowAdapter adapter)
     {
@@ -44,5 +50,25 @@ public class StoryListingViewModel : ViewModelBase<StoryListingViewModel>
             _selectedStory = value;
             NotifyPropertyChanged(vm => vm.SelectedStory);
         }
+    }
+    
+    private void EditStory()
+    {
+        if (SelectedStory == null)
+        {
+            _windowAdapter.Error("No story selected.");
+            return;
+        }
+        _windowAdapter.CommandsWithId["EditStoryCommand"](SelectedStory.Id);
+    }
+
+    private void DeleteStory()
+    {
+        if (SelectedStory == null)
+        {
+            _windowAdapter.Error("No story selected.");
+            return;
+        }
+        _windowAdapter.CommandsWithId["DeleteStoryCommand"](SelectedStory.Id);
     }
 }
