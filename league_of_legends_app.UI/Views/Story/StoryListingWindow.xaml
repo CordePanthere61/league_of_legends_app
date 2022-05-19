@@ -9,7 +9,8 @@
         Height="500" 
         Width="900"
         Background="#132225"
-        Padding="0 30 0 30">
+        Padding="0 30 0 30"
+        Activated="ReloadList">
     <Grid>
     <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

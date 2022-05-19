@@ -129,9 +129,9 @@ public class ChampionRepository : Repository<Champion>
         }));
     }
 
-    public override async Task Delete(Champion champion)
+    public override Task Delete(Champion champion)
     {
-        await Task.Run(() =>
+        return Task.Run(() =>
         {
             _database.Delete(BaseDelete, new Parameter("id", champion.Id));
         });

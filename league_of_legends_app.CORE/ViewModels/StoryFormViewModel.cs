@@ -226,7 +226,7 @@ public class StoryFormViewModel : ViewModelBase<StoryFormViewModel>
         int insertedId = await _storyRepository.Insert(story);
         if (insertedId != 0)
         {
-            await _championRepository.InsertOrUpdateChampionStory(story.Id, SelectedChampions);
+            await _championRepository.InsertOrUpdateChampionStory(insertedId, SelectedChampions);
             _windowAdapter.Success("Story inserted successfully.");
             _windowAdapter.Close();
             return;

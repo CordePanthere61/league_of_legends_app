@@ -27,7 +27,7 @@ public class StoryListingViewModel : ViewModelBase<StoryListingViewModel>
         FetchModels();
     }
 
-    private async void FetchModels()
+    public async void FetchModels()
     {
         Stories = await _storyRepository.FindAll();
     }

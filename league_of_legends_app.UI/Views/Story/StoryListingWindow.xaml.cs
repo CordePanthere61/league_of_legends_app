@@ -11,13 +11,14 @@ public partial class StoryListingWindow : Window
 {
     private StoryListingViewModel _viewModel;
     private StoryRepository _storyRepository;
+    private bool _firstTimeOpened = true;
     public StoryListingWindow()
     {
         InitializeComponent();
         var adapter = InitializeAdapter();
         _viewModel = new StoryListingViewModel(adapter);
         DataContext = _viewModel;
-        
+        _storyRepository = new StoryRepository();
     }
 
     private WindowAdapter InitializeAdapter()
@@ -33,6 +34,16 @@ public partial class StoryListingWindow : Window
             ["DeleteStoryCommand"] = DeleteStoryCommand
         };
         return adapter;
+    }
+
+    public void ReloadList(object sender, EventArgs e)
+    {
+        if (_firstTimeOpened)
+        {
+            _firstTimeOpened = false;
+            return;
+        }
+        _viewModel.FetchModels(); 
     }
 
     public void AddStoryCommand()
@@ -55,7 +66,7 @@ public partial class StoryListingWindow : Window
         {
             return;
         }
-        await _storyRepository.Delete(await _storyRepository.Find(id));
+        await _storyRepository.Delete(story);
         MessageBox.Show(story.Name + " deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 }

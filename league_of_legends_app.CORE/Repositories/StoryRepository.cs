@@ -30,6 +30,9 @@ public class StoryRepository : Repository<Story>
                                       " where id = @id" +
                                       " returning story.id as id";
     
+    private const string BaseDelete = "delete from story" +
+                                      " where id = @id";
+    
     private RegionRepository _regionRepository;
     private AuthorRepository _authorRepository;
     
@@ -72,9 +75,12 @@ public class StoryRepository : Repository<Story>
         }));
     }
 
-    public override Task Delete(Story entity)
+    public override Task Delete(Story story)
     {
-        throw new NotImplementedException();
+        return Task.Run(() =>
+        {
+            _database.Delete(BaseDelete, new Parameter("id", story.Id));
+        });
     }
     
     public override Story Handle(DataRow dr)
