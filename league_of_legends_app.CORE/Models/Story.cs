@@ -7,4 +7,6 @@ public class Story
     public Author Author { get; set; }
     public string? Name { get; set; }
     public string? Text { get; set; }
+    
+    public List<Champion>? SelectedChampions { get; set; }
 }

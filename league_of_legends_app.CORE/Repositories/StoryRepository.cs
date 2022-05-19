@@ -17,6 +17,18 @@ public class StoryRepository : Repository<Story>
     private const string BaseSelectAll = BaseSelect + " order by s.name";
 
     private const string BaseSelectSingle = BaseSelect + " where s.id = @id";
+
+    private const string BaseInsert = "insert into story(id_region, id_author, name, text)" +
+                                      " values (@id_region, @id_author, @name, @text)" +
+                                      " returning id";
+
+    private const string BaseUpdate = "update story" +
+                                      " set id_region = @id_region," +
+                                      " id_author = @id_author," +
+                                      " name = @name," +
+                                      " text = @text" +
+                                      " where id = @id" +
+                                      " returning story.id as id";
     
     private RegionRepository _regionRepository;
     private AuthorRepository _authorRepository;
@@ -37,14 +49,27 @@ public class StoryRepository : Repository<Story>
         return Task.Run(() => _database.Select(BaseSelectAll,this));
     }
 
-    public override Task<int> Insert(Story entity)
+    public override Task<int> Insert(Story story)
     {
-        throw new NotImplementedException();
+        return Task.Run(() => _database.Insert(BaseInsert, new[]
+        {
+            new Parameter("id_region", story.Region.Id),
+            new Parameter("id_author", story.Author.Id),
+            new Parameter("name", story.Name),
+            new Parameter("text", story.Text),
+        })); 
     }
 
-    public override Task<int> Update(Story entity)
+    public override Task<int> Update(Story story)
     {
-        throw new NotImplementedException();
+        return Task.Run(() => _database.Update(BaseUpdate, new[]
+        {
+            new Parameter("id_region", story.Region.Id),
+            new Parameter("id_author", story.Author.Id),
+            new Parameter("name", story.Name),
+            new Parameter("text", story.Text),
+            new Parameter("id", story.Id),
+        }));
     }
 
     public override Task Delete(Story entity)

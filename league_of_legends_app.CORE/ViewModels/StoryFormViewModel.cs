@@ -3,6 +3,7 @@ using System.Windows.Input;
 using league_of_legends_app.CORE.Interfaces;
 using league_of_legends_app.CORE.Models;
 using league_of_legends_app.CORE.Repositories;
+using league_of_legends_app.CORE.Validators;
 using SimpleMvvmToolkit.Express;
 
 namespace league_of_legends_app.CORE.ViewModels;
@@ -54,6 +55,11 @@ public class StoryFormViewModel : ViewModelBase<StoryFormViewModel>
         Champions = await _championRepository.FindAll();
         SelectedChampions = new List<Champion>();
         _areModelsLoaded.SetResult();
+    }
+
+    public async void ReloadAuthors()
+    {
+        Authors = await _authorRepository.FindAll(); 
     }
 
     private async void FetchSelectedStoryAndRelations()
@@ -173,7 +179,7 @@ public class StoryFormViewModel : ViewModelBase<StoryFormViewModel>
 
     public ICommand AddNewAuthor => new DelegateCommand(_windowAdapter.Commands["AddNewAuthor"]);
     
-    public ICommand SelectedChampionsChangedCommand => new DelegateCommand<SelectionChangedEventArgs>((sender) =>
+    public ICommand ChampionsChangedCommand => new DelegateCommand<SelectionChangedEventArgs>((sender) =>
     {
         if (sender.AddedItems.Count > 0)
         {
@@ -195,7 +201,52 @@ public class StoryFormViewModel : ViewModelBase<StoryFormViewModel>
 
     private void ValidateStory()
     {
-        
+        var story = new Story();
+        story.Name = Name;
+        story.Author = SelectedAuthor;
+        story.Region = SelectedRegion;
+        story.Text = Text;
+        story.SelectedChampions = SelectedChampions;
+        StoryValidator validator = new StoryValidator();
+        if (!validator.Validate(story))
+        {
+            _windowAdapter.Error("Please fill out every fields.");
+            return;
+        }
+        if (IsEdit)
+        {
+            UpdateStory(story);
+            return;
+        }
+        InsertStory(story);
     }
+    
+    private async void InsertStory(Story story)
+    {
+        int insertedId = await _storyRepository.Insert(story);
+        if (insertedId != 0)
+        {
+            await _championRepository.InsertOrUpdateChampionStory(story.Id, SelectedChampions);
+            _windowAdapter.Success("Story inserted successfully.");
+            _windowAdapter.Close();
+            return;
+        }
+        _windowAdapter.Error("An error has occured.");
+    }
+    
+    private async void UpdateStory(Story story)
+    {
+        story.Id = _storyId;
+        int updatedId = await _storyRepository.Update(story);
+        if (updatedId != 0)
+        {
+            await _championRepository.InsertOrUpdateChampionStory(story.Id, SelectedChampions);
+            _windowAdapter.Success("Story updated successfully.");
+            _windowAdapter.Close();
+            return;
+        }
+        _windowAdapter.Error("An error has occured.");
+    }
+    
     
 }

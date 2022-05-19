@@ -37,14 +37,19 @@ public class ChampionRepository : Repository<Champion>
     private const string BaseDelete = "delete from champion" +
                                       " where id = @id";
 
-    private const string SelectStoryChampions = "select c.id \"champion.Id\", c.name \"champion.Name\"" +
-                                                " from champion c" +
-                                                " join champion_story cs" +
+    private const string SelectStoryChampions = BaseSelect + " join champion_story cs on c.id = cs.id_champion" +
                                                 " where cs.id_story = @id";
+                                                
 
     private const string BaseSelectSingle = BaseSelect + " where c.id = @id";
 
     private const string BaseSelectAll = BaseSelect + " order by c.name";
+
+    private const string DeleteAllChampionsForStory = "delete from champion_story" +
+                                                      " where id_story = @id";
+
+    private const string InsertChampionForStory = "insert into champion_story(id_champion, id_story)" +
+                                                  " values (@id_champion, @id_story)";
 
 
     private SpecieRepository _specieRepository;
@@ -71,6 +76,22 @@ public class ChampionRepository : Repository<Champion>
     public Task<List<Champion>> FindAssociatedChampionsToStory(int storyId)
     {
         return Task.Run((() => _database.Select(SelectStoryChampions, this, new Parameter("id", storyId))));
+    }
+
+    public Task InsertOrUpdateChampionStory(int storyId, List<Champion> champions)
+    {
+        return Task.Run(() =>
+        {
+            _database.Delete(DeleteAllChampionsForStory, new Parameter("id", storyId));
+            foreach (Champion champion in champions)
+            {
+                _database.Insert(InsertChampionForStory, new[]
+                {
+                    new Parameter("id_story", storyId),
+                    new Parameter("id_champion", champion.Id)
+                });
+            }
+        });
     }
 
     public override Task<int> Insert(Champion champion)

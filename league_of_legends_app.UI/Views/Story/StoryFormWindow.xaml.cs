@@ -34,7 +34,7 @@ public partial class StoryFormWindow : Window
             _firstTimeOpened = false;
             return;
         }
-        _viewModel.FetchRequiredModels();
+        _viewModel.ReloadAuthors();
     }
 
     private WindowAdapter InitializeAdapter()
