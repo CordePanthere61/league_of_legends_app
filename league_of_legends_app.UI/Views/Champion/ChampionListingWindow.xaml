@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Champions Listing" 
         Height="650" 
-        Width="900"
+        Width="1100"
         Background="#132225"
         Activated="ReloadList">
     <Grid>
@@ -23,18 +23,27 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions> 
         
-        <DataGrid 
+        <ListBox 
             Grid.Column="0"
             Grid.Row="0"
-            Grid.ColumnSpan="5"
+            Grid.ColumnSpan="2"
             Margin="20"
             SelectionMode="Single"
+            DisplayMemberPath="Name"
             ItemsSource="{Binding Champions}"
-            AutoGenerateColumns="false"
             SelectedItem="{Binding SelectedChampion}"
+            />
+        
+        <DataGrid 
+            Grid.Column="2"
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Margin="20"
+            SelectionMode="Single"
+            AutoGenerateColumns="false"
+            ItemsSource="{Binding SelectedChampionDetails}"
             >
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Alias" Binding="{Binding Alias}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Specie" Binding="{Binding Specie.Name}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Region" Binding="{Binding Region.Name}"/>
@@ -42,7 +51,6 @@
                 <DataGridTextColumn IsReadOnly="True" Header="Release Date" Binding="{Binding ReleaseDate}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Price BE" Binding="{Binding PriceBe}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="Price RP" Binding="{Binding PriceRp}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Is Melee" Binding="{Binding IsMelee}"/>
             </DataGrid.Columns>
         </DataGrid>
         

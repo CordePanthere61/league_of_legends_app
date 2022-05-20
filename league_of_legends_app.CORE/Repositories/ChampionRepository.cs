@@ -146,7 +146,7 @@ public class ChampionRepository : Repository<Champion>
         champion.Region = _regionRepository.Handle(dr);
         champion.Name = dr.Field<string>("champion.Name");
         champion.Alias = dr.Field<string>("champion.Alias");
-        champion.ReleaseDate = dr.Field<DateTime>("champion.ReleaseDate").Date;
+        champion.ReleaseDate = dr.Field<DateTime>("champion.ReleaseDate").ToString("d");
         champion.PriceBe = dr.Field<int>("champion.PriceBe");
         champion.PriceRp = dr.Field<int>("champion.PriceRp");
         champion.Quote = dr.Field<string>("champion.Quote");

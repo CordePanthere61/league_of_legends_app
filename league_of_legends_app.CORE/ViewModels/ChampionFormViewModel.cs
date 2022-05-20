@@ -13,7 +13,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
     // Inputs
     private string _name;
     private string _alias;
-    private DateTime _releaseDate;
+    private string _releaseDate;
     private int _priceBe;
     private int _priceRp;
     private string _quote;
@@ -78,7 +78,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         await _areModelsLoaded.Task;
         Name = champion.Name!;
         Alias = champion.Alias!;
-        ReleaseDate = (DateTime) champion.ReleaseDate!;
+        ReleaseDate = champion.ReleaseDate!;
         IsMelee = champion.IsMelee;
         PriceBe = champion.PriceBe;
         PriceRp = champion.PriceRp;
@@ -127,7 +127,7 @@ public class ChampionFormViewModel : ViewModelBase<ChampionFormViewModel>
         }
     }
 
-    public DateTime ReleaseDate
+    public string ReleaseDate
     {
         get => _releaseDate;
         set

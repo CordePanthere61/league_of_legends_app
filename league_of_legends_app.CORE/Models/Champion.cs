@@ -8,7 +8,7 @@ public class Champion : IEquatable<Champion>
     public Region Region { get; set; }
     public string? Name { get; set; }
     public string? Alias { get; set; }
-    public DateTime? ReleaseDate { get; set; }
+    public string? ReleaseDate { get; set; }
     public int PriceBe { get; set; }
     public int PriceRp { get; set; }
     public string? Quote { get; set; }

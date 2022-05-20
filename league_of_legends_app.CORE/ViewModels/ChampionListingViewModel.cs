@@ -32,9 +32,19 @@ public class ChampionListingViewModel : ViewModelBase<ChampionListingViewModel>
         {
             _selectedChampion = value;
             NotifyPropertyChanged(vm => vm.SelectedChampion);
+            NotifyPropertyChanged(vm => vm.SelectedChampionDetails);
         }
     }
-    
+
+    public List<Champion>? SelectedChampionDetails
+    {
+        get
+        {
+            if (SelectedChampion != null) return new List<Champion> {SelectedChampion};
+            return null;
+        }
+    }
+
     public List<Champion> Champions
     {
         get => _champions;
