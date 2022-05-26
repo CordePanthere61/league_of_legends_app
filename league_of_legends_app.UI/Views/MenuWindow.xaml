@@ -12,6 +12,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -21,8 +22,8 @@
             Foreground="#c6b366"
             Grid.Row="0" 
             Grid.Column="0"
-            Grid.ColumnSpan="3" 
-            Content="Welcome to League of Legends management program" 
+            Grid.ColumnSpan="4" 
+            Content="League of Legends management program" 
             HorizontalAlignment="Center"
             Margin="100 100 100 400"
             VerticalAlignment="Center"
@@ -35,9 +36,8 @@
             Foreground="#c6b366"
             BorderBrush="#c6b366"
             Grid.Row="0" 
-            Grid.Column="0" 
+            Grid.Column="1" 
             VerticalAlignment="Center"
-            HorizontalAlignment="Right"
             Width="175"
             Height="80"
             Margin="0 100 0 0"
@@ -49,26 +49,13 @@
             Foreground="#c6b366"
             BorderBrush="#c6b366"
             Grid.Row="0" 
-            Grid.Column="1" 
+            Grid.Column="2" 
             VerticalAlignment="Center"
             Width="175"
             Height="80"
             Margin="0 100 0 0"
             Content="Manage Stories"
             Command="{Binding ManageStoriesCommand}"
-        />
-        <Button
-            Background="#0c3a38"
-            Foreground="#c6b366"
-            BorderBrush="#c6b366"
-            Grid.Row="0" 
-            Grid.Column="2"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Left"
-            Width="175"
-            Height="80"
-            Margin="0 100 0 0"
-            Content="Manage champions"
         />
     </Grid>
 </Window>
