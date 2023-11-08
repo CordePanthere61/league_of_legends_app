@@ -1,3 +1,4 @@
+# League of Legends App
 ## C# & Postgresql School Project from my third year at Cégep de Sorel-Tracy
 #### WPF C# Desktop application with a Postrgresql database
 
